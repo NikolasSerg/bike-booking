@@ -1,0 +1,4 @@
+export const REDUCER_CONST = {
+    ADD_BIKE: "ADD_BIKE",
+    REMOVE_BIKE: "REMOVE_BIKE",
+}
