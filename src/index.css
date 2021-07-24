@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Saira+Stencil+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Saira&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+}
+.col {
+    flex-direction: column;
+}
+.row {
+    flex-direction: row;
+}
+.jcc {
+    justify-content: center;
+}
+.jcsb {
+    justify-content: space-between;
+}
+.aic {
+    align-items: center;
+}
+
+.btn {
+    padding: 10px;
+    align-self: center;
+    font-family: 'Saira Stencil One', cursive;
+    border-radius: 10px;
+    box-shadow: 4px 4px 6px 1px rgba(34, 60, 80, 0.5);
+}
+.fw {
+    flex-wrap: wrap;
+}
+.close {
+    text-shadow: 2px 2px 2px #474747;
+    cursor: pointer;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    padding-bottom: 30px;
+}
+
+

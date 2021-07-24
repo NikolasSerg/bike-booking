@@ -1,0 +1,5 @@
+.bikeList {
+    /*flex-basis: 70%;*/
+    width: 100%;
+    min-width: 350px;
+}
