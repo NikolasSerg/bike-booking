@@ -15,7 +15,7 @@ export default function BikeList() {
             <div className='bikeList'>
                 <ul>
                     {bikes.map((item) => {
-                        return <Bike bike={item} />
+                        return <Bike bike={item} key={item.id}/>
                     })}
 
                 </ul>

@@ -11,7 +11,7 @@ export const bikeReducer = (state = defaultState, action) => {
         case ADD_BIKE:
             return {...state, bike: [...state.bike, action.payload]}
         case REMOVE_BIKE:
-            return {...state, bike: state.bike.filter((item) => item.id !== action.payload)}
+            return {...state, bike: state.bike.filter((item) => item.id !== action.payload.id)}
         case LOAD_BIKES:
             return {...state, bike: [...action.payload]}
         case SELECT_BIKES:
