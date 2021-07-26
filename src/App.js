@@ -8,8 +8,9 @@ function App() {
     return (
         <div className='wrapper container col'>
             <header className='header'>ADMIN.BIKE-BOOKING.COM</header>
-            <div className='editor container row'>
+            <div className='admin container row'>
                 <BikeList/>
+                <Editor />
             </div>
             <footer className='footer'>
                 Developer: <span>Sergiu Nikolaichuk</span>

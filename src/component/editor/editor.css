@@ -1,0 +1,33 @@
+.editor {
+    flex-basis: 45%;
+    padding: 10px;
+    min-width: 250px;
+}
+.inputBlock {
+    border-bottom: 1px solid #C4C4C4;
+}
+.inputBlock input {
+    min-width: 150px;
+    flex-basis: 150px;
+    flex-grow: 1;
+    margin: 0 10px 10px 0;
+}
+.inputBlock textarea, .inputBlock input, .inputBlock button {
+    margin: 0 10px 10px 0;
+    background-color: #E8E8E8;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 16px;
+}
+.inputBlock textarea {
+    flex-basis: 100%;
+}
+.editor button {
+    background-color: #696969;
+
+    flex-grow: 1;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    color: #fff;
+    text-align: center;
+}
