@@ -2,59 +2,123 @@ import React, {useState} from "react";
 import './editor.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addBikeAction} from "../../store/bikeReducer";
+import {logDOM} from "@testing-library/react";
 
-export default function Editor () {
+export default function Editor() {
     const initialState = {
         bike: {
-            name: '',
-            type: '',
-            color: '',
-            wheel: '',
-            price: '',
-            id: '',
-            description: ''
-        }
-
+            name: {
+                value: '',
+                class: '',
+                valid: false,
+                message: ''
+            },
+            type: {
+                value: '',
+                class: '',
+                valid: false,
+                message: ''
+            },
+            color: {
+                value: '',
+                class: '',
+                valid: false,
+                message: 'dddddddddddddddddd'
+            },
+            wheel: {
+                value: '',
+                class: '',
+                valid: false,
+                message: ''
+            },
+            price: {
+                value: '',
+                class: '',
+                valid: false,
+                message: 'kkkkkkkkkkkkkk'
+            },
+            id: {
+                value: '',
+                class: '',
+                valid: false,
+                message: ''
+            },
+            description: {
+                value: '',
+                class: '',
+                valid: false,
+                message: ''
+            }
+        },
+        submit: 'disabled',
     }
     const [state, setState] = useState(initialState);
     const dispatch = useDispatch();
 
     const total = useSelector(state => state.bike.bike);
+    // console.log(total, ' - total');
+    // console.log(typeof total, ' -type total');
+    // console.log(total[0].id, ' - total');
     const available = useSelector(state => {
         const sumItem = state.bike.bike.filter(item => {
-            if(item.status === 'available') {
+            if (item.status === 'available') {
                 return item
             }
         });
-        return  sumItem.length;
+        return sumItem.length;
     });
     const busy = useSelector(state => {
         const sumItem = state.bike.bike.filter(item => {
-            if(item.status === 'busy') {
+            if (item.status === 'busy') {
                 return item
             }
         });
-        return  sumItem.length;
+        return sumItem.length;
     });
     const avaragePrice = useSelector(state => {
         let prices = state.bike.bike.reduce((accumulator, current) => {
             return accumulator + +current.price
         }, 0)
-        return  Math.floor(prices/Number(total.length));
+        return Math.floor(prices / Number(total.length));
     });
-
 
     const idRef = React.createRef();
 
-
-    const onHandleChangeInput = (event) => {
-        console.log(state, ' - state')
-        // console.log(event.target, ' - event.target');
+    const onHandleChangeInput = async (event) => {
         switch (event.target.name) {
             case 'name':
-                let newName = {...state}
-                newName.bike.name = event.target.value;
-                setState(newName)
+                let newState = {...state}
+                let name = event.target.value;
+                let check = "";
+                for (const item in total) {
+                    if (item.name === name) {
+                        check = true
+                        break
+                    } else {
+                        check = false
+                    }
+                }
+
+                if (check === false && name.length >= 5) {
+                    newState.bike.name.valid = true;
+                    newState.bike.name.class = 'success';
+                    newState.bike.name.message = '';
+                    setState(newState)
+                } else if (check === true) {
+                    newState.bike.name.valid = false;
+                    newState.bike.name.message = 'this name exist';
+                    newState.bike.name.class = 'error';
+                    setState(newState)
+                } else if (check === false && name.length < 5) {
+                    newState.bike.name.valid = false;
+                    newState.bike.name.message = 'name has to be minimum 5 characters';
+                    newState.bike.name.class = 'error';
+                    setState(newState);
+                }
+                console.log(check, ' - check')
+                newState.bike.name.value = name;
+                setState(newState)
+                console.log(state.bike.name)
                 break
             case 'type':
                 let newType = {...state};
@@ -81,6 +145,7 @@ export default function Editor () {
                 let newId = {...state};
                 newId.bike.id = event.target.value;
                 setState(newId)
+                console.log(state)
                 break
             case 'description':
                 let newDescription = {...state};
@@ -90,28 +155,30 @@ export default function Editor () {
         }
     }
     const onHandlePurposeId = () => {
-
-        if(state.bike.id === '') {
+        if (state.bike.id === '') {
             let id = new Date().getTime();
             idRef.current.value = id;
             let newId = {...state};
-            console.log(newId)
             newId.bike.id = id;
             setState(newId);
         }
     }
-    // const onHandleInputColor = (event) => {
-    //     // console.log(event.target.color, ' - color func')
-    //     //  setState(state => ({...state, color: event.target.value}))
-    //     // console.log(state, ' - STATE')
-    //  поки непотрібно}
 
-
-    const onHandleSubmit = (event) => {
+    const onHandleSubmit = async (event) => {
         event.preventDefault();
         console.log(state, ' - state');
-        // eslint-disable-next-line no-undef
         let newBike = {...state};
+        let id = state.bike.id;
+        let idExist = await total.find((item) => {
+            if (Number(item.id) === Number(id)) {
+                return item
+            }
+            return null
+        })
+        console.log(
+            idExist !== null ? '1' : '0'
+            , ' - idExist')
+
         console.log(newBike)
         dispatch(addBikeAction(newBike.bike));
         handleClear();
@@ -122,25 +189,44 @@ export default function Editor () {
     const onHandleClear = (event) => {
         handleClear()
     }
+    const handleErrorMassage = (state) => {
 
-    return(
-        <div className='container col editor'  style={{backgroundColor: '#fff'}}>
-            <form className='inputBlock container row fw' onSubmit={onHandleSubmit} onChange={(event) => onHandleChangeInput(event)}>
-                <input type="text" name='name' placeholder='Name' value={state.bike.name}/>
+    }
+
+    return (
+        <div className='container col editor' style={{backgroundColor: '#fff'}}>
+            <form className='inputBlock container row fw' onSubmit={onHandleSubmit}
+                  onChange={(event) => onHandleChangeInput(event)}>
+                <input type="text" name='name' placeholder='Name' className={state.bike.name.class}
+                       value={state.bike.name.value}/>
                 {/*<input type="text" name='type' placeholder='Type'value={state.bike.type}/>*/}
-                <select name='type' value={state.bike.type}>
+                <select name='type' value={state.bike.type.value}>
                     <option value="kids">kids</option>
                     <option value="mountain">mountain</option>
                     <option value="highway">highway</option>
                     <option value="women's">women's</option>
                     <option value="scooter">scooter</option>
                 </select>
-                <input type="color" name='color' placeholder='Color' style={{padding: 0}} title='change color' value={state.bike.color}/>
-                <input type="text" name='wheel' placeholder='Wheel size' value={state.bike.wheel}/>
-                <input type="number" name='price' placeholder='Price' value={state.bike.price}/>
-                <input type="text" name='id' placeholder='ID: XXXXXX' title='input only integers number' onFocus={onHandlePurposeId} ref={idRef} value={state.bike.id}/>
-                <textarea cols="30" rows="4" name='description' placeholder='Description' value={state.bike.description}></textarea>
-                <button type='submit' className='container jcc aic'>SAVE</button>
+                <input type="color" name='color' placeholder='Color' style={{padding: 0}} title='change color'
+                       value={state.bike.color.value}/>
+                <input type="text" name='wheel' placeholder='Wheel size' value={state.bike.wheel.value}/>
+                <input type="number" name='price' placeholder='Price' value={state.bike.price.value}/>
+                <input type="text" name='id' placeholder='ID: XXXXXX' title='input only integers number'
+                       onFocus={onHandlePurposeId} ref={idRef} value={state.bike.id.value}/>
+                <textarea cols="30" rows="4" name='description' placeholder='Description'
+                          value={state.bike.description.value}></textarea>
+                <div className='error-message'>
+                    <ul>
+                        {
+                            Object.values(state.bike)
+                                .filter(item => {return item.message !== '' ? item.message : ''})
+                                .map(item => ( <li>{item.message}</li>))
+                        }
+                    </ul>
+                </div>
+                <button type='submit' className='container jcc aic' disabled={state.submit}
+                        style={state.submit === 'disabled' ? {backgroundColor: '#d2cfcf'} : {backgroundColor: '#696969'}}>SAVE
+                </button>
                 <button className='container jcc aic' onClick={onHandleClear}>CLEAR</button>
             </form>
             <div className='static'>
