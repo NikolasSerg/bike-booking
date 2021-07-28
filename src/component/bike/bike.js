@@ -41,18 +41,18 @@ class Bike extends React.Component {
             <li className='container col jcsb bikeItem' style={{borderColor: this.state.borderColor}}>
                 <div className='container'>
                     <div className="container row fw jcsb name">
-                        <div style={{fontWeight: 600}}>NAME: {this.props.bike.name}</div>
-                        <div>TYPE: {this.props.bike.type}</div>
+                        <div style={{fontWeight: 600}}><span style={{marginRight: '1rem'}}>NAME: </span>{this.props.bike.name}</div>
+                        <div><span style={{marginRight: '1rem'}}>TYPE: </span>{this.props.bike.type}</div>
                     </div>
                     <span className='close' onClick={() => this.onHandleRemove(this.props.bike.id)}>&#215;</span>
                 </div>
                 <div className="container row aic">
-                    <span>COLOR: </span>
+                    <span style={{marginRight: '1rem'}}>COLOR: </span>
                     <div className='colorPiker'
-                         style={{backgroundColor: this.props.bike.color}}>{this.props.bike.color}</div>
+                         style={{backgroundColor: this.props.bike.color}}></div>
                 </div>
                 <div style={{fontSize: '10px'}}>
-                    ID: <span>{this.props.bike.id}</span>
+                    <span style={{marginRight: '1rem'}}>ID: </span><span>{this.props.bike.id}</span>
                 </div>
                 <div className='container row jcsb'>
                     <div className='container row jcsb aic' style={{width: '170px'}}>

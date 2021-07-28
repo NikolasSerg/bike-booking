@@ -6,13 +6,13 @@
 .inputBlock {
     border-bottom: 1px solid #C4C4C4;
 }
-.inputBlock input {
+.inputBlock input, .inputBlock select{
     min-width: 150px;
     flex-basis: 150px;
     flex-grow: 1;
     margin: 0 10px 10px 0;
 }
-.inputBlock textarea, .inputBlock input, .inputBlock button {
+.inputBlock textarea, .inputBlock input, .inputBlock button, .inputBlock select {
     margin: 0 10px 10px 0;
     background-color: #E8E8E8;
     border: none;
