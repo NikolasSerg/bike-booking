@@ -41,7 +41,17 @@
 }
 .inputBlock .error {
     background-color: #db9d9d;
+    border: 1px solid red;
 }
 .inputBlock .success {
     background-color: #E8E8E8;
+
 }
+.inputBlock .warning {
+    background-color: #ffb74d;
+}
+.inputBlock .warning-font {
+    color: #ffa431;
+}
+/*disabled={state.submit}*/
+/*{!*style={state.submit === 'disabled' ? {backgroundColor: '#d2cfcf'} : {backgroundColor: '#696969'}}>SAVE*!}*/
