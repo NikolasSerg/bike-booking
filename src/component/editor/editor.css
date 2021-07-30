@@ -31,6 +31,13 @@
     color: #fff;
     text-align: center;
 }
+.editor button:hover {
+    background-color: #424242;
+}
+.editor button:active {
+    color: #838282;
+    background-color: #cbcbcb;
+}
 .error-message {
     color: red;
     font-size: 10px;
@@ -51,7 +58,5 @@
     background-color: #ffb74d;
 }
 .inputBlock .warning-font {
-    color: #ffa431;
+    color: #d07000;
 }
-/*disabled={state.submit}*/
-/*{!*style={state.submit === 'disabled' ? {backgroundColor: '#d2cfcf'} : {backgroundColor: '#696969'}}>SAVE*!}*/

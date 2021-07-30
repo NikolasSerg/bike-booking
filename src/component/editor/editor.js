@@ -1,8 +1,7 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import './editor.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addBikeAction} from "../../store/bikeReducer";
-import {logDOM} from "@testing-library/react";
 
 export default function Editor() {
     const initialState = {
@@ -50,8 +49,9 @@ export default function Editor() {
                 message: ''
             }
         },
-        submit: false,
+        disabled: true,
     }
+
     const [state, setState] = useState(initialState);
     const dispatch = useDispatch();
 
@@ -86,6 +86,19 @@ export default function Editor() {
     const colorRef = React.createRef();
     const typeRef = React.createRef();
 
+    // const handleDisableButton = () => {
+    //     let rez = Object.keys(state.bike).every(item => state.bike[item].valid == true);
+    //     console.log(rez, ' - rez')
+    //     if(rez) {
+    //         console.log('state.submit = FALSE');
+    //         setState(state => ({...state, submit: false}));
+    //         console.log(state.submit);
+    //     } else {
+    //         console.log('state.submit = TRUE')
+    //         setState(state => ({...state, submit: true}));
+    //         console.log(state.submit)
+    //     }
+    // }
 
     let newState = {...state}
     let switchHandle = (e, subject, condition, message) => {
@@ -97,6 +110,12 @@ export default function Editor() {
             subject.valid = false;
             subject.message = message;
             subject.class = 'error';
+        }
+        if(e.target.name === 'price') {
+            console.log(e)
+            subject.value = parseInt(e.target.value);
+        } else {
+            subject.value = e.target.value;
         }
         setState(newState)
     }
@@ -117,47 +136,32 @@ export default function Editor() {
         switch (event.target.name) {
             case 'name':
                 let name = event.target.value;
-                let check = "";
-                total.find(item => {
-                    if (item.name === name) {
-                        // console.log(item.name, ' - item.name')
-                        // console.log(name, ' - name')
-                        // console.log('name exist')
-                        return check = true
-                        // console.log(check, ' - is find')
-
-                    } else {
-                        // console.log(item, ' - item in else')
-                        // console.log(item.name, ' - item.name in else')
-                        // console.log('name dont exist')
-                        check = false
-                    }
-                })
-                // switchHandel(check, name, newState);
-
-                if (check === false && name.length >= 5) {
+                console.log(name, ' - NAME')
+                let check = total.find(item => item.name === name)
+                console.log(check, ' - CHECK')
+                if (!check && name.length >= 5) {
                     console.log(check, '  - check in FIRST')
                     newState.bike.name.valid = true;
                     newState.bike.name.class = 'success';
                     newState.bike.name.message = '';
-                    setState(newState)
-                } else if (check === true) {
+                    // setState(newState)
+                } else if (check) {
                     console.log(check, '  - check in SECOND')
                     newState.bike.name.valid = true;
                     newState.bike.name.message = 'WARNING: this name is exist';
                     newState.bike.name.class = 'warning';
-                    setState(newState)
-                } else if (check === false && name.length < 5) {
+                    // setState(newState)
+                } else if (!check && name.length < 5) {
                     console.log(check, '  - check in THIRD')
                     newState.bike.name.valid = false;
                     newState.bike.name.message = 'ERROR: Name has to be minimum 5 characters';
                     newState.bike.name.class = 'error';
-                    setState(newState);
+                    // setState(newState);
                 }
-                console.log(check, ' - check')
+                // console.log(check, ' - check')
                 newState.bike.name.value = name;
                 setState(newState)
-                console.log(state.bike.name)
+                // console.log(state.bike.name)
                 break
             case 'type':
                 // console.log(event.target.value, ' - event.target.value')
@@ -171,9 +175,9 @@ export default function Editor() {
                 //     newState.bike.type.class = 'error';
                 // }
 
-                newState.bike.type.value = event.target.value;
+                // newState.bike.type.value = event.target.value;
                 // setState(newState)
-                console.log(newState.bike.type, ' - newState.bike.type')
+                // console.log(newState.bike.type, ' - newState.bike.type')
                 switchHandle(event, newState.bike.type, 'event.target.value !== ""', 'ERROR: the Type field has to be change');
                 break
             case 'color':
@@ -187,7 +191,7 @@ export default function Editor() {
                 //     newState.bike.color.class = 'error';
                 // }
 
-                newState.bike.color.value = event.target.value;
+                // newState.bike.color.value = event.target.value;
                 // setState(newState)
                 switchHandle(event, newState.bike.color, 'event.target.value !== ""', 'ERROR: the Color field has to be change');
                 break
@@ -205,7 +209,7 @@ export default function Editor() {
                 //     newState.bike.wheel.message = 'ERROR: the Wheel field is empty';
                 //     newState.bike.wheel.class = 'error';
                 // }
-                newState.bike.wheel.value = event.target.value;
+                // newState.bike.wheel.value = event.target.value;
                 // setState(newState)
                 switchHandle(event, newState.bike.wheel, 'e.target.value !== ""', 'ERROR: the Wheel field is empty');
                 break
@@ -222,7 +226,7 @@ export default function Editor() {
                 //     newState.bike.price.message = 'ERROR: the Prise field has to be minimum 1 number';
                 //     newState.bike.price.class = 'error';
                 // }
-                newState.bike.price.value = parseInt(event.target.value);
+                // newState.bike.price.value = parseInt(event.target.value);
                 // console.log(newState.bike.price, ' - newState.bike.price')
                 // setState(newState)
                 switchHandle(event, newState.bike.price, 'event.target.value !== \'\' && event.target.value.length >=1', 'ERROR: the Prise field has to be minimum 1 number');
@@ -238,7 +242,7 @@ export default function Editor() {
                 //     newState.bike.id.class = 'error';
                 // }
 
-                newState.bike.id.value = event.target.value;
+                // newState.bike.id.value = event.target.value;
                 // setState(newState)
                 switchHandle(event, newState.bike.id, 'event.target.value.length >= 5', 'ERROR: the ID field has to be minimum 5 characters');
                 break
@@ -253,47 +257,52 @@ export default function Editor() {
                 //     newState.bike.description.class = 'error';
                 // }
 
-                newState.bike.description.value = event.target.value;
+                // newState.bike.description.value = event.target.value;
                 // setState(newState)
                 switchHandle(event, newState.bike.description, 'event.target.value.length >= 15', 'ERROR: the Description filed has to be minimum 15 characters');
                 break
         }
-        // let test = Object.keys(state.bike)
-        let rez = Object.keys(state.bike).every(item => state.bike[item].valid == true);
-        console.log(rez, ' - rez')
-        if(rez) {
-            console.log('state.submit = FALSE');
-            setState(state => ({...state, submit: false}));
-            console.log(state.submit);
+        // let rez = Object.keys(state.bike).every(item => state.bike[item].valid === true);
+        // console.log(rez, ' - rez')
+        console.log(state, ' - STATE')
+        if(Object.keys(state.bike).every(item => state.bike[item].valid === true)) {
+            console.log('state.disabled = FALSE');
+            setState(state => ({...state, disabled: false}));
+            console.log(state.disabled, ' - disabled');
         } else {
-            console.log('state.submit = TRUE')
-            setState(state => ({...state, submit: true}));
-            console.log(state.submit)
+            console.log('state.disabled = TRUE')
+            setState(state => ({...state, disabled: true}));
+            console.log(state.disabled, ' - disabled')
         }
-        // Object.keys(state.bike).every(item => {
-        //     return state.bike[item].valid == true
-        // }) ? state.submit = '' : state.submit = 'disabled'
-    }
+        }
     const onHandlePurposeId = () => {
-        if (state.bike.id === '') {
+        if (state.bike.id.value === '') {
             let id = new Date().getTime();
             idRef.current.value = id;
-            let newId = {...state};
-            newId.bike.id = id;
-            setState(newId);
+            // let newId = {...state};
+            newState.bike.id.value = id;
+            newState.bike.id.valid = true;
+            newState.bike.id.class = 'success';
+            newState.bike.id.message = '';
+            setState(newState);
         }
     }
 
     const onHandleSubmit = (event) => {
         event.preventDefault();
         console.log('SUBMIT')
-        // console.log(state.submit)
-        if(state.submit === true) {
-            console.log('кнопка неактивна')
+        console.log(state.bike);
+        let newBike = {
+            id: state.bike.id.value,
+            name: state.bike.name.value,
+            type: state.bike.type.value,
+            color: state.bike.color.value,
+            wheelSize: state.bike.wheel.value,
+            img: "",
+            status: "available",
+            price: state.bike.price.value
         }
-        if(state.submit === false) {
-            console.log('кнопка активна')
-        }
+
         // console.log(state, ' - state');
         // let newBike = {...state};
         // let id = state.bike.id;
@@ -308,8 +317,8 @@ export default function Editor() {
         //     , ' - idExist')
         //
         // console.log(newBike)
-        // dispatch(addBikeAction(newBike.bike));
-        // handleClear();
+        dispatch(addBikeAction(newBike));
+        handleClear();
 
     }
     const handleClear = () => {
@@ -317,9 +326,6 @@ export default function Editor() {
     }
     const onHandleClear = (event) => {
         handleClear()
-    }
-    const handleErrorMassage = (state) => {
-
     }
 
     return (
@@ -356,9 +362,9 @@ export default function Editor() {
                     </ul>
                 </div>
                 <button type='submit' className='container jcc aic'
-                        disabled={state.submit}
-                        style={state.submit === true ? {backgroundColor: 'red'} : {backgroundColor: 'green'}}>
-                    +
+                        disabled={state.disabled}
+                        style={state.disabled === true ? {backgroundColor: '#c5c2c2'} : null}>
+                    ADD
                 </button>
                 <button className='container jcc aic' onClick={onHandleClear}>CLEAR</button>
             </form>
