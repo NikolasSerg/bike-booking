@@ -1,15 +1,17 @@
 import {config} from '../config';
-const defaultState = {
-    bike: [
+import localforage from "localforage";
 
-    ]
+// localforage.getItem('bike');
+const defaultState = {
+    bike: []
 }
+
 const {ADD_BIKE, REMOVE_BIKE, LOAD_BIKES, SELECT_BIKES} = config.reducers;
 
 export const bikeReducer = (state = defaultState, action) => {
     switch (action.type) {
         case ADD_BIKE:
-            return {...state, bike: [...state.bike, action.payload]}
+            return {...state, bike: [...state.bike, action.payload]};
         case REMOVE_BIKE:
             return {...state, bike: state.bike.filter((item) => item.id !== action.payload.id)}
         case LOAD_BIKES:
@@ -27,7 +29,6 @@ export const bikeReducer = (state = defaultState, action) => {
                     }
                 )
             }
-
         default:
             return state
     }

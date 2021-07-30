@@ -31,6 +31,7 @@ class Bike extends React.Component {
     onHandleRemove = (id) => {
         console.log(id, ' - id target remove');
         this.props.remoteBike(id);
+
     }
     componentDidMount() {
         this.handleChangeColor()
