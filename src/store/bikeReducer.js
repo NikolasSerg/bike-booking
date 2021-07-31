@@ -1,7 +1,4 @@
 import {config} from '../config';
-import localforage from "localforage";
-
-// localforage.getItem('bike');
 const defaultState = {
     bike: []
 }

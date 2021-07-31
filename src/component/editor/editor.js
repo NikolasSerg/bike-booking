@@ -2,8 +2,7 @@ import React, {useState} from "react";
 import './editor.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addBikeAction} from "../../store/bikeReducer";
-import localforage from "localforage";
-import {logDOM} from "@testing-library/react";
+import  localforage from "localforage";
 
 export default function Editor() {
     const initialState = {
@@ -141,10 +140,10 @@ export default function Editor() {
                 switchHandle(event, newState.bike.color, 'event.target.value !== ""', 'ERROR: the Color field has to be change');
                 break
             case 'wheel':
-                switchHandle(event, newState.bike.wheel, 'e.target.value !== ""', 'ERROR: the Wheel field is empty');
+                switchHandle(event, newState.bike.wheel, 'e.target.value > 2', 'ERROR: the Wheel field has to be minimum 2 characters');
                 break
             case 'price':
-                switchHandle(event, newState.bike.price, 'event.target.value !== \'\' && event.target.value.length >=1', 'ERROR: the Prise field has to be minimum 1 number');
+                switchHandle(event, newState.bike.price, 'event.target.value.length >=2', 'ERROR: the Price field has to be minimum 2 number');
                 break
             case 'id':
                 switchHandle(event, newState.bike.id, 'event.target.value.length >= 5', 'ERROR: the ID field has to be minimum 5 characters');
@@ -175,6 +174,10 @@ export default function Editor() {
     const onHandleSubmit = (event) => {
         event.preventDefault();
         console.log('SUBMIT')
+    }
+
+    const onHandleAdd = (event) => {
+        console.log('ADD')
         console.log(state.bike);
         let newBike = {
             id: state.bike.id.value,
@@ -189,13 +192,11 @@ export default function Editor() {
 
         dispatch(addBikeAction(newBike));
 
-        handleClear();
+        onHandleClear();
     }
-    const handleClear = () => {
-        setState(initialState)
-    }
-    const onHandleClear = (event) => {
-        handleClear()
+    const onHandleClear = () => {
+        setState(initialState);
+        console.log(localforage.getItem('bikes').then(data => console.log(data, ' - inner')).catch(err => {console.err(err, ' - in catch')}))
     }
 
     return (
@@ -238,7 +239,9 @@ export default function Editor() {
                 </div>
                 <button type='submit' className='container jcc aic'
                         disabled={state.disabled}
-                        style={state.disabled === true ? {backgroundColor: '#c5c2c2'} : null}>
+                        style={state.disabled === true ? {backgroundColor: '#c5c2c2'} : null}
+                        onClick={onHandleAdd}
+                >
                     ADD
                 </button>
                 <button className='container jcc aic' onClick={onHandleClear}>CLEAR</button>
@@ -248,7 +251,7 @@ export default function Editor() {
                 <p>Total Bikes: <span>{total.length}</span></p>
                 <p>Available Bikes: <span>{available}</span></p>
                 <p>Booked Bikes: <span>{busy}</span></p>
-                <p>Avarage bikes cost: <span>{avaragePrice}</span> UAH/hr</p>
+                <p>Avarage bikes cost: <span>{isNaN(avaragePrice) ? 0 : avaragePrice}</span> UAH/hr</p>
             </div>
         </div>
     )
