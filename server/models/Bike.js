@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 bikeSchema = new Schema({
     id: {
-        type: String,
+        type: Number,
         required: true,
         unique: true
     },
@@ -19,7 +19,7 @@ bikeSchema = new Schema({
         type: String,
         required: true
     },
-    wheelSize: {
+    wheel: {
         type: Number,
         required: true
     },
@@ -30,7 +30,12 @@ bikeSchema = new Schema({
     price: {
         type: Number,
         required: true
+    },
+    description: {
+        type: String,
+        required: true
     }
+
 })
 
 module.exports = mongoose.model('bikes', bikeSchema);

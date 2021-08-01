@@ -1,4 +1,4 @@
 {
-  "db": "mongodb+srv://mongoSergiu:mongoSergiu@cluster0.ltlwj.mongodb.net/bikes?retryWrites=true&w=majority",
+  "db": "mongodb+srv://mongoSergiu:mongoSergiu@cluster0.ltlwj.mongodb.net/bike?retryWrites=true&w=majority",
   "port": "5000"
 }

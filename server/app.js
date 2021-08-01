@@ -8,9 +8,12 @@ const config = require("./config.json");
 const url = config.db;
 const PORT = config.port;
 
+const admin = require('./routers/adminRoute');
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-// app.use('/admin', cors({origin: "http://localhost:3000"}), admin);
+app.use(cors({origin: "http://localhost:3000"}));
+app.use('/admin', admin);
 
 try{
     mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true})

@@ -49,10 +49,15 @@
     background-color: transparent;
     border: none;
 }
-
-
-
-
+.busy {
+    border-color: #F2994A
+}
+.unavailable {
+    border-color: #EB5757
+}
+.available {
+    border-color: #6FCF97
+}
 
 
 

@@ -3,10 +3,17 @@ import './editor.css';
 import {useDispatch, useSelector} from "react-redux";
 import {addBikeAction} from "../../store/bikeReducer";
 import  localforage from "localforage";
+import {addBike} from '../../store/asyncAction/bike';
 
 export default function Editor() {
     const initialState = {
         bike: {
+            id: {
+                value: '',
+                class: '',
+                valid: false,
+                message: ''
+            },
             name: {
                 value: '',
                 class: '',
@@ -32,12 +39,6 @@ export default function Editor() {
                 message: ''
             },
             price: {
-                value: '',
-                class: '',
-                valid: false,
-                message: ''
-            },
-            id: {
                 value: '',
                 class: '',
                 valid: false,
@@ -173,7 +174,7 @@ export default function Editor() {
 
     const onHandleSubmit = (event) => {
         event.preventDefault();
-        console.log('SUBMIT')
+        console.log('SUBMIT');
     }
 
     const onHandleAdd = (event) => {
@@ -184,19 +185,18 @@ export default function Editor() {
             name: state.bike.name.value,
             type: state.bike.type.value,
             color: state.bike.color.value,
-            wheelSize: state.bike.wheel.value,
-            img: "",
+            wheel: state.bike.wheel.value,
             status: "available",
-            price: state.bike.price.value
+            price: state.bike.price.value,
+            description: state.bike.description.value
         }
 
-        dispatch(addBikeAction(newBike));
+        dispatch(addBike(newBike));
 
         onHandleClear();
     }
     const onHandleClear = () => {
         setState(initialState);
-        console.log(localforage.getItem('bikes').then(data => console.log(data, ' - inner')).catch(err => {console.err(err, ' - in catch')}))
     }
 
     return (

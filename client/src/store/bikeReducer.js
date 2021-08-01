@@ -10,7 +10,8 @@ export const bikeReducer = (state = defaultState, action) => {
         case ADD_BIKE:
             return {...state, bike: [...state.bike, action.payload]};
         case REMOVE_BIKE:
-            return {...state, bike: state.bike.filter((item) => item.id !== action.payload.id)}
+            console.log(action.payload.id, ' - action.payload.id')
+            return {...state, bike: state.bike.filter((item) => item._id !== action.payload.id)}
         case LOAD_BIKES:
             return {...state, bike: [...action.payload]}
         case SELECT_BIKES:
@@ -19,7 +20,7 @@ export const bikeReducer = (state = defaultState, action) => {
                 ...state,
                 bike: state.bike.map(
                     item => {
-                        if (item.id == action.payload.id) {
+                        if (item._id === action.payload._id) {
                             item.status = action.payload.select
                         }
                         return item

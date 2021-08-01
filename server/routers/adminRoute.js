@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const adminController = require('../controllers/adminController');
+const bikeController = require('../controllers/bikeController');
 
-router.get('/', shopsController.getAll);
-router.post('/create', shopsController.create);
+router.get('/bikes', bikeController.getAll);
+router.post('/add', bikeController.add);
 
 module.exports = router;
