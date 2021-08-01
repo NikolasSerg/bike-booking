@@ -9,9 +9,6 @@ module.exports.getAll = async function(req, res) {
             message: "error on server"
         })
     }
-    // res.status(200).json({
-    //     message: "test done"
-    // })
 }
 module.exports.add = async function(req, res) {
     console.log(req.body, ' - BODY');
@@ -34,4 +31,14 @@ module.exports.add = async function(req, res) {
         })
         console.error(e, ' error during save')
     }
+}
+module.exports.del = async function(req, res) {
+    console.log(req.body, ' - BODY IN DEL');
+    try {
+        await Bike.remove({id: req.body.id});
+        res.status(200).json({message: `bike id ${req.body.id} was deleted`})
+    } catch (e) {
+        res.status(500).json({message: "error during delete"})
+    }
+
 }

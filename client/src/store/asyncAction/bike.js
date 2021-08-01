@@ -1,4 +1,4 @@
-import {loadBikesAction, addBikeAction} from '../bikeReducer';
+import {loadBikesAction, addBikeAction, removeBikeAction} from '../bikeReducer';
 import db from '../../db.json';
 import localforage from "localforage";
 
@@ -22,7 +22,7 @@ import localforage from "localforage";
 export const fetchBikes = () => {
     return async (dispatch) => {
         let newData = [];
-        await fetch('http://localhost:5000/admin/bikes')
+        await fetch('http://localhost:5000/admin/')
             .then(res => res.json())
             .then(data => newData = data)
 
@@ -32,7 +32,7 @@ export const fetchBikes = () => {
 
 export const addBike = (bike) => {
     return async (dispatch) => {
-        await fetch('http://localhost:5000/admin/add', {
+        await fetch('http://localhost:5000/admin/', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json;chapter=utf-8'},
                 body: JSON.stringify(bike)
@@ -41,14 +41,14 @@ export const addBike = (bike) => {
         dispatch(addBikeAction(bike))
     }
 }
-export const updateBike = (bike) => {
+export const removeBike = (id) => {
     return async (dispatch) => {
-        await fetch('http://localhost:5000/admin/add', {
-                method: 'POST',
+        await fetch('http://localhost:5000/admin/', {
+                method: 'DELETE',
                 headers: {'Content-Type': 'application/json;chapter=utf-8'},
-                body: JSON.stringify(bike)
+                body: JSON.stringify({id})
             }
         )
-        dispatch(addBikeAction(bike))
+        dispatch(removeBikeAction({id}))
     }
 }

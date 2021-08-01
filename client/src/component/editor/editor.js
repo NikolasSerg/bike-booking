@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import './editor.css';
 import {useDispatch, useSelector} from "react-redux";
-import {addBikeAction} from "../../store/bikeReducer";
-import  localforage from "localforage";
 import {addBike} from '../../store/asyncAction/bike';
 
 export default function Editor() {
