@@ -4,13 +4,7 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import localforage from "localforage";
 
-let data = '';
-store.subscribe(() => {
-    data = store.getState()
-    localforage.setItem('bikes', data.bike.bike)
-})
 
 
 ReactDOM.render(

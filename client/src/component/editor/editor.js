@@ -99,6 +99,7 @@ export default function Editor() {
         } else {
             subject.value = e.target.value;
         }
+
         setState(newState)
     }
 
@@ -115,7 +116,7 @@ export default function Editor() {
         switch (event.target.name) {
             case 'name':
                 let name = event.target.value;
-                let check = total.find(item => item.name === name)
+                let check = total.find(item => item.name === name);
                 if (!check && name.length >= 5) {
                     newState.bike.name.valid = true;
                     newState.bike.name.class = 'success';
@@ -139,10 +140,10 @@ export default function Editor() {
                 switchHandle(event, newState.bike.color, 'event.target.value !== ""', 'ERROR: the Color field has to be change');
                 break
             case 'wheel':
-                switchHandle(event, newState.bike.wheel, 'e.target.value > 2', 'ERROR: the Wheel field has to be minimum 2 characters');
+                switchHandle(event, newState.bike.wheel, 'e.target.value.length >= 2 && e.target.value.length < 3', 'ERROR: the Wheel field has to be only 2 characters');
                 break
             case 'price':
-                switchHandle(event, newState.bike.price, 'event.target.value.length >=2', 'ERROR: the Price field has to be minimum 2 number');
+                switchHandle(event, newState.bike.price, 'event.target.value.length >=2 && event.target.value.length < 4', 'ERROR: the Price field has to be 2-3 number');
                 break
             case 'id':
                 switchHandle(event, newState.bike.id, 'event.target.value.length >= 5', 'ERROR: the ID field has to be minimum 5 characters');
@@ -172,12 +173,9 @@ export default function Editor() {
 
     const onHandleSubmit = (event) => {
         event.preventDefault();
-        console.log('SUBMIT');
     }
 
     const onHandleAdd = (event) => {
-        console.log('ADD')
-        console.log(state.bike);
         let newBike = {
             id: state.bike.id.value,
             name: state.bike.name.value,
@@ -203,7 +201,6 @@ export default function Editor() {
                   onChange={(event) => onHandleChangeInput(event)} onSubmit={onHandleSubmit}>
                 <input type="text" name='name' placeholder='Name' className={state.bike.name.class}
                        value={state.bike.name.value}/>
-                {/*<input type="text" name='type' placeholder='Type'value={state.bike.type}/>*/}
                 <select name='type' value={state.bike.type.value} className={state.bike.type.class} ref={typeRef}>
                     <option value="kids">kids</option>
                     <option value="mountain">mountain</option>
@@ -214,10 +211,9 @@ export default function Editor() {
                 <input type="color" name='color' placeholder='Color' style={{padding: 0}}
                        className={state.bike.color.class} title='change color'
                        value={state.bike.color.value} ref={colorRef}/>
-                <input type="text" name='wheel' placeholder='Wheel size' value={state.bike.wheel.value}
+                <input type="number" name='wheel' placeholder='Wheel size' value={state.bike.wheel.value}
                        className={state.bike.wheel.class}/>
                 <input type="number" onFocus={(event) => {
-                    console.log(event.target.value)
                 }} name='price' placeholder='Price' value={state.bike.price.value} className={state.bike.price.class}/>
                 <input type="text" name='id' placeholder='ID: XXXXXX' title='input only integers number'
                        onFocus={onHandlePurposeId} ref={idRef} value={state.bike.id.value}

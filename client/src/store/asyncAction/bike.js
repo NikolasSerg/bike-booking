@@ -1,23 +1,4 @@
-import {loadBikesAction, addBikeAction, removeBikeAction} from '../bikeReducer';
-import db from '../../db.json';
-import localforage from "localforage";
-
-// export const fetchBikes =  (dispatch) => {
-//     return async (dispatch) => {
-//         let newData = '';
-//         await localforage.getItem('bikes').then(data => {
-//             if(data === null) {
-//                 newData = db;
-//                 console.log('db')
-//             } else {
-//                 newData = data;
-//                 console.log('data')
-//             }
-//         }).catch(err => console.error(err))
-//         dispatch(loadBikesAction(newData))
-//     }
-// }
-
+import {loadBikesAction, addBikeAction, removeBikeAction, changeStatusAction} from '../bikeReducer';
 
 export const fetchBikes = () => {
     return async (dispatch) => {
@@ -50,5 +31,16 @@ export const removeBike = (id) => {
             }
         )
         dispatch(removeBikeAction({id}))
+    }
+}
+export const updateBike = (bike) => {
+    return async (dispatch) => {
+        await fetch('http://localhost:5000/admin/', {
+                method: 'PATCH',
+                headers: {'Content-Type': 'application/json;chapter=utf-8'},
+                body: JSON.stringify(bike)
+            }
+        )
+        dispatch(changeStatusAction(bike))
     }
 }

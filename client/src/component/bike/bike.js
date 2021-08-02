@@ -1,21 +1,15 @@
 import React from "react";
 import './bike.css';
-import {changeStatusAction} from '../../store/bikeReducer';
-import {removeBike} from '../../store/asyncAction/bike';
+import {removeBike, updateBike} from '../../store/asyncAction/bike';
 import {useDispatch} from "react-redux";
 
 
 export default function Bike(props) {
-// обновить/
     const dispatch = useDispatch();
     const onHandleChange = (event) => {
-        console.log(event.target.id, ' - ID in SELECT');
-        console.log(event.target.value, ' - VALUE in SELECT');
-        dispatch(changeStatusAction({id: event.target.id, select: event.target.value}))
+        dispatch(updateBike({id: event.target.id, status: event.target.value}))
     }
     const onHandleRemove = (id) => {
-        console.log(id, ' - id target remove');
-        // dispatch(removeBikeAction({id}))
         dispatch(removeBike(id))
     }
 

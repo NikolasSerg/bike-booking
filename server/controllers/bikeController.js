@@ -11,7 +11,6 @@ module.exports.getAll = async function(req, res) {
     }
 }
 module.exports.add = async function(req, res) {
-    console.log(req.body, ' - BODY');
     let bike = new Bike({
         id: req.body.id,
         name: req.body.name,
@@ -29,14 +28,21 @@ module.exports.add = async function(req, res) {
         res.status(500).json({
             message: 'error during save'
         })
-        console.error(e, ' error during save')
     }
 }
 module.exports.del = async function(req, res) {
-    console.log(req.body, ' - BODY IN DEL');
     try {
         await Bike.remove({id: req.body.id});
         res.status(200).json({message: `bike id ${req.body.id} was deleted`})
+    } catch (e) {
+        res.status(500).json({message: "error during delete"})
+    }
+
+}
+module.exports.change = async function(req, res) {
+    try {
+        await Bike.updateOne({id: req.body.id}, {$set: {status: req.body.status}});
+        res.status(200).json({message: `bike id ${req.body.id} was changed`})
     } catch (e) {
         res.status(500).json({message: "error during delete"})
     }

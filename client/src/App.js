@@ -1,30 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import './App.css';
 import BikeList from "./component/bikeList/bikeList";
 import Editor from "./component/editor/editor";
-
-// function useWindowSize() {
-//     // const [size, setSize] = useState(window.innerWidth);
-//     useEffect(() => {
-//         const handleResize = () => {
-//             setSize(window.innerWidth)
-//         };
-//         window.addEventListener('resize', handleResize)
-//     }, [])
-//     return size
-// }
+import Footer from './component/footer/footer';
+import Header from './component/header/header';
 
 function App() {
     return (
         <div className='wrapper container col'>
-            <header className='header'>ADMIN.BIKE-BOOKING.COM</header>
+            <Header />
             <div className='admin container row'>
                 <BikeList/>
                 <Editor/>
             </div>
-            <footer className='footer'>
-                Developer: <span>Sergiu Nikolaichuk</span>
-            </footer>
+            <Footer />
         </div>
     );
 }

@@ -8,14 +8,13 @@ import './bikeList.css';
 export default function BikeList() {
     const dispatch = useDispatch();
     const bikes = useSelector(state => state.bike.bike);
-    console.log(bikes, ' - bikes');
 
     if (bikes.length > 0) {
         return (
             <div className='bikeList'>
                 <ul>
-                    {bikes.map((item) => {
-                        return <Bike bike={item} key={item.id}/>
+                    {bikes.map((item, index) => {
+                        return <Bike bike={item} key={index}/>
                     })}
 
                 </ul>
