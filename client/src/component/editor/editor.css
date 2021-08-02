@@ -21,7 +21,6 @@
 }
 .inputBlock textarea {
     flex-basis: 100%;
-    /*resize: none;*/
 }
 .editor button {
     background-color: #696969;
