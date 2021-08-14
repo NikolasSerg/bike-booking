@@ -57,19 +57,12 @@ export default function Editor() {
 
     const total = useSelector(state => state.bike.bike);
     const available = useSelector(state => {
-        const sumItem = state.bike.bike.filter(item => {
-            if (item.status === 'available') {
-                return item
-            }
-        });
+        const sumItem = state.bike.bike.filter(item =>
+            item.status === 'available' ? item : null);
         return sumItem.length;
     });
     const busy = useSelector(state => {
-        const sumItem = state.bike.bike.filter(item => {
-            if (item.status === 'busy') {
-                return item
-            }
-        });
+        const sumItem = state.bike.bike.filter(item => item.status === 'busy' ? item : null);
         return sumItem.length;
     });
     const avaragePrice = useSelector(state => {
@@ -95,7 +88,7 @@ export default function Editor() {
             subject.class = 'error';
         }
         if (e.target.name === 'price') {
-            subject.value = parseInt(e.target.value);
+            subject.value = parseInt(e.target.value, 10);
         } else {
             subject.value = e.target.value;
         }
@@ -151,6 +144,8 @@ export default function Editor() {
             case 'description':
                 switchHandle(event, newState.bike.description, 'event.target.value.length >= 15', 'ERROR: the Description filed has to be minimum 15 characters');
                 break
+            default:
+                console.log(event.target)
         }
 
         if (Object.keys(state.bike).every(item => state.bike[item].valid === true)) {

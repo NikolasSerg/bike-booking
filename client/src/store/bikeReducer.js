@@ -18,7 +18,7 @@ export const bikeReducer = (state = defaultState, action) => {
                 ...state,
                 bike: state.bike.map(
                     item => {
-                        if (item.id == action.payload.id) {
+                        if (item.id === +action.payload.id) {
                             item.status = action.payload.status
                         }
                         return item

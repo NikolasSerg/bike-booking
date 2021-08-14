@@ -2,9 +2,9 @@ import React from "react";
 import './bike.css';
 import {removeBike, updateBike} from '../../store/asyncAction/bike';
 import {useDispatch} from "react-redux";
+import PropTypes from 'prop-types';
 
-
-export default function Bike(props) {
+function Bike(props) {
     const dispatch = useDispatch();
     const onHandleChange = (event) => {
         dispatch(updateBike({id: event.target.id, status: event.target.value}))
@@ -49,6 +49,11 @@ export default function Bike(props) {
     )
 }
 
+Bike.propTypes = {
+    bike: PropTypes.object.isRequired
+}
+
+export default Bike
 
 
 
